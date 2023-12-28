@@ -3,7 +3,7 @@ import { useAppDispatch } from "../Redux/hooks";
 import axios from "axios";
 import { setToken } from "../Redux/features/AuthSlice";
 import { Link, useNavigate } from "react-router-dom";
-
+import "../tailwind.css";
 interface AuthFormProps {
   title: string;
 }
@@ -33,7 +33,8 @@ const AuthForm: React.FC<AuthFormProps> = ({ title }) => {
       setPassword("");
       navigate("/dashboard");
     } catch (error) {
-      console.error("Error :", error);
+      // console.log(error);
+      alert(error);
     } finally {
       setLoading(false);
     }
@@ -41,11 +42,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ title }) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-md p-4 mx-auto bg-white shadow-md rounded-md"
-      >
-        <div className="mb-4">
+      <form onSubmit={handleSubmit} className="mx-auto w-[40vw] space-y-6">
+        <h1 className="text-3xl font-bold text-center">{title}</h1>
+        <p className="text-gray-500 dark:text-gray-400 text-center">
+          Enter your credentials to
+          {title === "Sign Up" ? " create new account" : " access your account"}
+        </p>
+        <div className="space-y-4">
           <label className="block text-sm font-medium text-gray-600">
             Email Id
           </label>
@@ -54,11 +57,11 @@ const AuthForm: React.FC<AuthFormProps> = ({ title }) => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 border rounded-md"
-            placeholder="Enter your Email Id"
+            placeholder="Enter your email id"
             required
           />
         </div>
-        <div className="mb-4">
+        <div className="space-y-4">
           <label className="block text-sm font-medium text-gray-600">
             Password
           </label>
@@ -73,16 +76,28 @@ const AuthForm: React.FC<AuthFormProps> = ({ title }) => {
         </div>
         <button
           type="submit"
-          className="w-full p-2 bg-blue-500 text-white rounded-md"
+          className="w-full p-2 bg-black text-white rounded-md"
         >
           {loading ? "Loading..." : title}
         </button>
+        <div className="space-y-4 text-center">
+          {title === "Sign Up" ? (
+            <>
+              <span>Account already exists? </span>
+              <Link to="/signin" className="underline">
+                Sign In
+              </Link>
+            </>
+          ) : (
+            <>
+              <span>Don't have an account? </span>
+              <Link to="/" className="underline">
+                Sign Up
+              </Link>
+            </>
+          )}
+        </div>
       </form>
-      {title === "Sign Up" ? (
-        <Link to="/signin">Go To SignIn Page</Link>
-      ) : (
-        <Link to="/">Go To SignUp Page</Link>
-      )}
     </div>
   );
 };

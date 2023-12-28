@@ -11,8 +11,8 @@ const Dashboard = () => {
     }
   }, [token, navigate]);
 
-  if (token) return <div>Protected Dashboard Page</div>;
-  else return null;
+  if (!token) return null;
+  else return <div>Protected Dashboard Page</div>;
 };
 
 export default Dashboard;
