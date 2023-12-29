@@ -1,18 +1,10 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../Redux/hooks";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const token = useAppSelector((state) => state.auth.token);
-  useEffect(() => {
-    if (!token) {
-      navigate("/");
-    }
-  }, [token, navigate]);
-
-  if (!token) return null;
-  else return <div>Protected Dashboard Page</div>;
+  return <div>
+    <h1>Protected Dashboard Page</h1>
+    <Link to="/" className="underline">Sign Out</Link>
+  </div>;
 };
 
 export default Dashboard;

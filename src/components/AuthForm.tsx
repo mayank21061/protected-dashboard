@@ -33,7 +33,6 @@ const AuthForm: React.FC<AuthFormProps> = ({ title }) => {
       setPassword("");
       navigate("/dashboard");
     } catch (error) {
-      // console.log(error);
       alert(error);
     } finally {
       setLoading(false);
